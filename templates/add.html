@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watermark Studio</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#f2f4f8;margin:0}
+header{background:#1f3c88;color:#fff;padding:14px 24px;font-size:20px;font-weight:bold;display:flex;justify-content:space-between;align-items:center}
+.home-btn{background:rgba(255,255,255,0.1);color:white;padding:8px 12px;border-radius:4px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.home-btn:hover{background:rgba(255,255,255,0.2)}
+.container{display:flex;height:calc(100vh - 56px)}
+.sidebar{width:300px;background:#fff;border-right:1px solid #ddd;padding:20px;overflow:auto}
+.preview{flex:1;display:flex;align-items:center;justify-content:center;background:#e9edf5}
+.card{background:#fff;border-radius:8px;padding:16px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+label{font-size:12px;font-weight:bold;display:block;margin-bottom:4px}
+input,select{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px;margin-bottom:12px}
+button{background:#1f3c88;color:white;border:none;padding:12px;width:100%;border-radius:6px;font-weight:bold;cursor:pointer}
+button:hover{background:#162d6b}
+img{max-width:80%;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+<header>
+<span>Watermark Adder for image,.pdf and .docx files</span>
+<nav>
+<a class="home-btn" href="/all/{{username}}">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 11.5L12 3l9 8.5"/>
+    <path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/>
+  </svg>
+</a>
+</nav>
+</header>
+<form class="container" action="/add/{{username}}" method="POST" enctype="multipart/form-data">
+
+<div class="sidebar">
+<div class="card">
+<h3>Upload File</h3>
+<label>Select File</label>
+<input type="file" name="image" required>
+</div>
+
+<div class="card">
+<h3>Watermark Text</h3>
+<label>Text</label>
+<input type="text" name="text" value="Your Watermark">
+
+<label>position</label>
+<select name="position" id="position">
+<option value="center">center</option>
+<option value="center-left">center left</option>
+<option value="center-right">center right</option>
+<option value="center-bottom">center bottom</option>
+<option value="top">center top</option>
+</select>
+
+<label>font</label>
+<select name="font" id="font">
+<option value="ARIAL.TTF">ARIAL.TTF</option>
+<option value="ARIALBD.TTF">ARIALBD.TTF</option>
+<option value="ARIALBI.TTF">ARIALBI.TTF</option>
+<option value="ARIALI.TTF">ARIALI.TTF</option>
+<option value="BAHNSCHRIFT.TTF">BAHNSCHRIFT.TTF</option>
+<option value="FRAMD.TTF">FRAMD.TTF</option>
+<option value="FRAMDIT.TTF">FRAMDIT.TTF</option>
+<option value="NIRMALA.TTC">NIRMALA.TTC</option>
+</select>
+
+<label>opacity</label>
+<select name="opacity" id="opacity">
+<option value="bold">bold</option>
+<option value="transparent">transparent</option>
+<option value="invisible">invisible</option>
+</select>
+
+<label>size</label>
+<select name="size" id="size">
+<option value="small">small</option>
+<option value="medium">medium</option>
+<option value="large">large</option>
+</select>
+</div>
+
+<button type="submit">Process & Download</button>
+</div>
+
+<div class="preview">
+<div>
+<img src="" alt="">
+</div>
+</div>
+
+</form>
+</body>
+</html>

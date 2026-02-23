@@ -1,0 +1,12 @@
+opencv-python
+numpy
+pillow
+flask
+pytesseract
+imwatermark
+pymupdf
+tensorflow
+python-docx
+sentence_transformers
+piexif
+sqlite3

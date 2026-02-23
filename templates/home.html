@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html class="h-full bg-slate-50" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Watermark Intelligence System - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+body{font-family:'Inter',sans-serif}
+
+.sidebar-link{
+transition:all .2s;
+color:white;
+}
+.sidebar-link:hover{background:#4c5d84}
+
+.active-link{
+background:white;
+color:#1f3c88!important;
+}
+</style>
+</head>
+
+<body class="h-full overflow-hidden">
+<div class="flex h-full">
+
+<!-- SIDEBAR -->
+<aside class="w-64 bg-[#1f3c88] text-white flex flex-col h-full shrink-0">
+<div class="p-6 flex items-center gap-3">
+
+<!-- LOGO -->
+<div class="w-8 h-8 bg-white rounded flex items-center justify-center">
+<span class="text-[#1f3c88] font-bold">W</span>
+</div>
+
+<span class="font-bold text-white tracking-tight">Dashboard</span>
+</div>
+
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/add/{{username}}">Add a Watermark</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/template/{{username}}">Template Watermark</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/docorpdf/{{username}}">Document Watermark Analysis</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/history/{{username}}">User History</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/addinvis/{{username}}">Add Invisible Watermark</a>
+<a class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium" href="/login">Logout</a>
+</nav>
+</aside>
+
+<!-- MAIN -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+<!-- HEADER -->
+<header class="bg-[#1f3c88] text-white px-6 py-3 flex items-center justify-between">
+<h1 class="text-xl font-bold uppercase tracking-wide">
+Watermark Intelligence System
+</h1>
+</header>
+
+<div class="flex-1 overflow-y-auto p-8 bg-slate-50">
+<div class="max-w-7xl mx-auto space-y-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+<section class="bg-white rounded-xl shadow-sm border overflow-hidden">
+<div class="p-6 border-b bg-slate-50/50">
+<h2 class="text-lg font-semibold">
+Image Watermark Analyzer (0%=no watermark 50-100%=likely a watermark)
+</h2>
+</div>
+
+<div class="p-6">
+<form action="/all/{{username}}" method="POST" enctype="multipart/form-data" class="space-y-4" id="form-analyze">
+<input type="file" name="image" class="block w-full border rounded p-2" onchange="previewImage(this,'analyzer-preview')">
+<img id="analyzer-preview" class="hidden rounded"/>
+<button class="w-full bg-[#1f3c88] text-white py-2 rounded">Run Analysis</button>
+</form>
+
+<div id="analysis-result" class="hidden mt-4 bg-black text-green-400 text-xs p-4 rounded whitespace-pre-wrap"></div>
+</div>
+</section>
+
+</div>
+</div>
+</div>
+</main>
+</div>
+
+<script>
+const username="{{username}}";
+
+function previewImage(input,id){
+const img=document.getElementById(id);
+const r=new FileReader();
+r.onload=e=>{img.src=e.target.result;img.classList.remove('hidden')};
+r.readAsDataURL(input.files[0])
+}
+
+formAnalyze=document.getElementById('form-analyze');
+formAnalyze.onsubmit=async e=>{
+e.preventDefault();
+let res=await fetch(`/all/${username}`,{method:'POST',body:new FormData(formAnalyze)});
+let j=await res.json();
+let box=document.getElementById('analysis-result');
+box.classList.remove('hidden');
+box.textContent=JSON.stringify(j,null,2)
+}
+</script>
+
+</body>
+</html>
